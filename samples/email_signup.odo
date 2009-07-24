@@ -1,0 +1,12 @@
+account "Green Schools" do
+  akismet :key => 'value'
+  collection :subscriptions do
+    text :email, :required => true
+    text :first_name
+    text :last_name
+    text :zip
+    checkboxes :roles, %w( Parent Student Teacher Other )
+    text :other_role
+    captcha
+  end
+end
