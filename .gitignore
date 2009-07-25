@@ -7,6 +7,7 @@ doc/app
 coverage
 db/*.sqlite3
 *.swp
+*.swo
 public/stylesheets/*.css
 config/session_secret.txt
 config/initializers/site_keys.rb
