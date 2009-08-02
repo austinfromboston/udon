@@ -1,0 +1,9 @@
+%h1 
+  Showing
+  = collection_class.name.pluralize
+
+%ul
+  - current_objects.each do |obj|
+    %li
+      = obj.email
+      %a{ :href => edit_object_path( obj )} edit 

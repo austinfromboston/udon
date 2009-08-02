@@ -9,6 +9,8 @@ Udon::Account.configure do |config|
     text :zip
     checkboxes :roles, %w( Parent Student Teacher Other )
     text :other_role
+    select :state, :state_options
+    text_area :description
     #captcha
   end
 end

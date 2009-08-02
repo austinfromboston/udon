@@ -15,6 +15,20 @@ module Udon
       self.fields <<  CollectionField.new( fieldname, :text, options )
     end
 
+    def select(*args)
+      fieldname = args.shift
+      options = args.extract_options!
+      self.fields.delete_if { |f| f.name == fieldname.to_s }
+      self.fields <<  CollectionField.new( fieldname, :select, options )
+    end
+
+    def text_area(*args)
+      fieldname = args.shift
+      options = args.extract_options!
+      self.fields.delete_if { |f| f.name == fieldname.to_s }
+      self.fields <<  CollectionField.new( fieldname, :text_area, options )
+    end
+
     def checkboxes(*args)
       fieldname = args.shift
       options = args.extract_options!
@@ -35,15 +49,36 @@ module Udon
       CollectionField.haml "%input{ :type => 'submit', :value => '#{text}'}"
     end
 
+    def form_proxy( source )
+      populated = clone
+      populated.fields = fields.map do |f|
+        field_clone = f.clone
+        field_clone.value = source.send f.name
+        field_clone
+      end
+      populated
+    end
+
   end
 
   class CollectionField
 
-    attr_accessor :name, :type, :options
+    attr_accessor :name, :type, :options, :value
     def initialize(name, type, options={})
       self.name = name.to_s
       self.type = type.to_sym
       self.options = options
+    end
+
+    def value=(val)
+      return @value = val unless plural?
+      self.send "#{self.type}_value=", val
+    end
+
+    def checkboxes_value=(vals)
+      segments.each do |seg|
+        seg.value = vals.include? seg.options[:label]
+      end
     end
 
     def label
@@ -70,15 +105,28 @@ module Udon
     end
 
     def template_text 
-      "%input{ :name => '#{name}'}"
+      "%input{ :name => '#{name}', :value => '#{value}'}"
+    end
+
+    def template_text_area
+      "%textarea{ :name => '#{name}'}\n  #{value}"
+
+    end
+
+    def template_select
+      "%select{ :name => '#{name}'}"
     end
 
     def template_checkbox
-      "%input{ :name => '#{name}', :type => 'checkbox', :value => 1 }"
+      "%input{ :name => '#{name}' :type => 'hidden' }\n%input{ :id => '#{field_id}' :name => '#{name}', :type => 'checkbox', :value => '#{options[:label]}' #{ value ? ', :checked => "checked"' :""} }"
+    end
+
+    def field_id
+      "#{type}_#{name}"
     end
 
     def template_label(text)
-      "%label{ :for => '#{name}'} #{text}"
+      "%label{ :for => '#{field_id}'} #{text}"
     end
 
 
@@ -89,7 +137,7 @@ module Udon
 
     def segments
       return [self] unless plural?
-      options[:values].map do |opt|
+      @segments ||= options[:values].map do |opt|
         CollectionField.new "#{name}[#{opt.underscore}]", :checkbox, :label => opt
       end
 

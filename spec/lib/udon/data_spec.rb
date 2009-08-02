@@ -20,6 +20,20 @@ describe UdonExample do
       @example.topics = [ 'cheese', 'bread']
       @example.topics.should == ['cheese', 'bread']
     end
+
+    it "accepts hashes and translates them as arrays" do
+      @example.topics = { :ch => 'cheese', :br => 'bread' }
+      @example.topics.should include('cheese')
+      @example.topics.should include('bread')
+      @example.topics.size.should == 2
+    end
+
+    it "handles mass assignment as well" do
+      @example.attributes = { :topics => { :ch => 'cheese', :br => 'bread' } }
+      @example.topics.should include('cheese')
+      @example.topics.should include('bread')
+      @example.topics.size.should == 2
+    end
   end
 
   describe "arguments array" do

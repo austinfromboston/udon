@@ -13,5 +13,6 @@ $stderr.reopen(log)
 
 
 use Rack::ContentLength
+use Rack::MethodOverride
 
 run Udon::Application

@@ -1,0 +1,25 @@
+%h1
+  Edit
+  = collection_class.name
+
+%form{:method => 'POST', :action => object_path(current_object)}
+  %input{ :name => '_method', :value => 'PUT', :type => 'hidden' }
+  - build_form( current_object ) do |f|
+    - f.fields.each do |field|
+      - if field.plural?
+        - field.segments.each do |field_segment|
+          %p
+            = field_segment.control
+            = field_segment.label
+      - else
+        %p
+          = field.label 
+          = field.control 
+
+    %p.submit
+      = f.submit "Update"
+
+%form{:method => 'POST', :action => object_path(current_object)}
+  %input{ :name => '_method', :value => 'DELETE', :type => 'hidden' }
+  %p.delete
+    %input{ :type => 'submit', :value => 'Delete' }
