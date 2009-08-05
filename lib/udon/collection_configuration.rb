@@ -1,4 +1,5 @@
 require 'haml'
+require 'parkaby'
 
 module Udon
   class CollectionConfiguration
@@ -91,7 +92,7 @@ module Udon
     end
 
     def control
-      haml self.send( "template_#{type}" )
+      self.send( "render_#{type}" )
     end
 
     def haml(template)
@@ -108,17 +109,31 @@ module Udon
       "%input{ :name => '#{name}', :value => '#{value}'}"
     end
 
-    def template_text_area
-      "%textarea{ :name => '#{name}'}\n  #{value}"
-
+    def render_text
+      Parkaby {
+        input '', :name => name, :value => value
+      }
     end
 
-    def template_select
-      "%select{ :name => '#{name}'}"
+    def render_text_area
+      Parkaby {
+        textarea value, :name => name
+      }
     end
 
-    def template_checkbox
-      "%input{ :name => '#{name}' :type => 'hidden' }\n%input{ :id => '#{field_id}' :name => '#{name}', :type => 'checkbox', :value => '#{options[:label]}' #{ value ? ', :checked => "checked"' :""} }"
+    def render_select
+      Parkaby {
+        select [], { :name => name}
+      }
+    end
+
+    def render_checkbox
+      Parkaby {
+        html {
+          input :name => name, :type => 'hidden'
+          input( {:id => field_id, :name => name, :type => 'checkbox', :value => options[:label] }.merge( value ? { :checked => "checked" } : {} ))
+        }
+      }
     end
 
     def field_id
