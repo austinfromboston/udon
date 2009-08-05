@@ -5,9 +5,9 @@ Feature: Edit example data
 
   Scenario: view the example form
     When I request the edit example page
-    Then I see existing data in the form
-    And the edit form points to the example url
-    And the edit form fakes a PUT with a hidden field
+      Then I see existing data in the form
+      And the edit form points to the example url
+      And the edit form fakes a PUT with a hidden field
 
   Scenario: update the example
     When I send updates to the example

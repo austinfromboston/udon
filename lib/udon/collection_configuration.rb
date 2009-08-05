@@ -1,5 +1,5 @@
 require 'haml'
-require 'parkaby'
+require 'markaby'
 
 module Udon
   class CollectionConfiguration
@@ -47,7 +47,7 @@ module Udon
 
     def submit( text = nil )
       text ||= "Submit"
-      CollectionField.haml "%input{ :type => 'submit', :value => '#{text}'}"
+      CollectionField.haml( "%input{ :type => 'submit', :value => text }" ).render(nil, {:text => text })
     end
 
     def form_proxy( source )
@@ -83,12 +83,17 @@ module Udon
     end
 
     def label
-      label_text = name.titleize
+      @label_text = name.titleize
       if options.has_key? :label
         return unless options[:label]
-        label_text = options[:label]
+        @label_text = options[:label]
       end
-      haml template_label(label_text)
+      template = "%label{ :for => field_id }=@label_text"
+      haml(template).render self
+    end
+
+    def template_vars
+      { :name => name, :field_id => field_id, :value => value, :options => options }
     end
 
     def control
@@ -102,38 +107,32 @@ module Udon
     def self.haml( template )
       @@haml_engine ||= Haml::Engine.new template
       @@haml_engine.send( :initialize, template )
-      @@haml_engine.to_html
-    end
-
-    def template_text 
-      "%input{ :name => '#{name}', :value => '#{value}'}"
+      @@haml_engine
     end
 
     def render_text
-      Parkaby {
-        input '', :name => name, :value => value
-      }
+        
+      template = "%input{ :name => name, :value => value }"
+      haml(template).render(self)
     end
 
     def render_text_area
-      Parkaby {
-        textarea value, :name => name
-      }
+      template = 
+        "%textarea{ :name => name}\n" +
+        "  ~ value"
+      haml(template).render(self)
     end
 
     def render_select
-      Parkaby {
-        select [], { :name => name}
-      }
+      template = "%select{ :name => name}"
+      haml(template).render(self)
     end
 
     def render_checkbox
-      Parkaby {
-        html {
-          input :name => name, :type => 'hidden'
-          input( {:id => field_id, :name => name, :type => 'checkbox', :value => options[:label] }.merge( value ? { :checked => "checked" } : {} ))
-        }
-      }
+      template = 
+        "%input{ :name => name, :type => 'hidden' }\n" +
+        "%input{ {:id => field_id, :name => name, :type => 'checkbox', :value => options[:label] }.merge( value ? { :checked => 'checked' } : {} )}"
+      haml(template).render(self)
     end
 
     def field_id

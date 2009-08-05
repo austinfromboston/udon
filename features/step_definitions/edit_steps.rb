@@ -3,6 +3,7 @@ When /^I request the edit example page$/ do
 end
 
 Then /^I see existing data in the form$/ do
+  get "/examples/#{@ex.id}/edit"
   last_response.should have_selector("input[value=\"#{@ex.email}\"]")
   #last_response.should have_selector("input[value=\"Parent\"]:not(:checked)")
 end

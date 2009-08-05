@@ -15,7 +15,7 @@ World do
   include Webrat::Methods
   include Webrat::Matchers
   Webrat.configure do |config|
-    config.mode = :sinatra
+    config.mode = :rack
   end
 
 end
