@@ -21,7 +21,9 @@ module Udon
       fieldname = args.shift
       options = args.extract_options!
       self.fields.delete_if { |f| f.name == fieldname.to_s }
-      self.fields <<  FormField.new( fieldname, :select, options )
+      select_field = FormField.new( fieldname, :select, options )
+      select_field.select_options = args.shift
+      self.fields << select_field
     end
 
     def text_area(*args)

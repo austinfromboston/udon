@@ -1,2 +1,2 @@
 = haml :'controls/label.html', {}, :field => field
-%input{ :name => field.name, :value => field.value }
+%input{ { :id => field.id, :name => field.name, :value => field.value }.merge(field.html_options) }

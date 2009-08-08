@@ -5,6 +5,14 @@ Feature: Adding example data
   Scenario: view the example form
     When I request the new example page
     Then I see the new example form
+	And selects are visible
+	And textareas are visible
+	And include_blank selects have an empty options
+	And classes from the configuration are in the html
+	And all fields have ids
+
+	And the email is marked as required
+	And the state select has options
 
   Scenario: adding an example
     When I submit the new example form

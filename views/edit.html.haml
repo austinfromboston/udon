@@ -2,17 +2,13 @@
   Edit
   = collection_class.name
 
--#%form{:method => 'POST', :action => object_path(current_object)}
-  %input{ :name => '_method', :value => 'PUT', :type => 'hidden' }
-= build_form( current_object, :method => :put ) do |f|
+- build_form( current_object, :method => :put ) do |f|
   - f.fields.each do |field|
-    %p
+    %p.form-field{ field.required? ? {:class => 'required'} : {} }
       = control_for field
 
   = submit "Update"
 
--#%form{:method => 'POST', :action => object_path(current_object)}
-  %input{ :name => '_method', :value => 'DELETE', :type => 'hidden' }
-= build_form( current_object, :method => :delete ) do |f|
+- build_form( current_object, :method => :delete ) do |f|
   .delete
     = submit "Delete"

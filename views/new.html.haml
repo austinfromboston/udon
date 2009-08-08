@@ -4,7 +4,7 @@
 
 - build_form( current_object ) do |f|
   - f.fields.each do |field|
-    %p
+    %p.form-field{ field.required? ? {:class => 'required'} : {} }
       = control_for field
 
   = submit "Create"

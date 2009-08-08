@@ -4,8 +4,30 @@ end
 
 Then /^I see the new example form$/ do
   last_response.should have_selector("form[action='/examples']")
+end
+Then /selects are visible/ do
   last_response.should have_selector("select[name='state']")
+end
+Then /textareas are visible/ do
   last_response.should have_selector("textarea[name='description']")
+end
+Then /include_blank selects have an empty option/ do
+  last_response.should have_selector("option[value='']:empty")
+end
+Then /classes from the configuration are in the html/ do
+  last_response.should have_selector("textarea.minor")
+end
+Then /all fields have ids/ do
+  last_response.should have_selector("textarea##{Example.config[:description].id}")
+end
+
+Then /the email is marked as required/ do
+  last_response.should have_selector(".required input[name='email']")
+end
+
+Then /^the state select has options/ do
+  last_response.should have_selector("select[name='state'] option[value='complete']")
+  last_response.should have_selector("select[name='state'] option[value='pending']")
 end
 
 When /^I submit the new example form$/ do

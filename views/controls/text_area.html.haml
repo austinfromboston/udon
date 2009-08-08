@@ -1,3 +1,2 @@
 = haml :'controls/label.html', {}, :field => field
-%textarea{ :name => field.name}
-  ~ field.value
+%textarea{ { :id => field.id, :name => field.name }.merge( field.html_options ) }~ field.value
