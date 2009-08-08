@@ -10,6 +10,9 @@ load 'udon/data.rb'
 load 'udon/account.rb'
 load 'udon/account_configuration.rb'
 load 'udon/collection_configuration.rb'
+load 'udon/form_helper.rb'
+load 'udon/route_helper.rb'
+load 'udon/resource_helper.rb'
 
 class Sinatra::Reloader < Rack::Reloader 
   def safe_load(file, mtime, stderr = $stderr) 

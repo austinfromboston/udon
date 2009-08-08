@@ -26,14 +26,6 @@ describe Udon::CollectionConfiguration do
     @config[:email].label.should be_blank
   end
 
-  it "generates controls" do
-    @config[:email].control.should match( /<input.*name=["']email['"]/ )
-  end
-
-  it "makes submit buttons" do
-    @config.submit( "Foo" ).should match(/input.*type=.*submit/)
-  end
-
   describe "checkboxes" do
     it "knows its plural nature" do
       @config[:roles].should be_plural
@@ -43,9 +35,6 @@ describe Udon::CollectionConfiguration do
       @config[:roles].segments.first.name.should == 'roles[parent]'
     end
 
-    it "makes ok checkbox elements" do
-      @config[:roles].segments.first.control.should match(/input.*type=['"]checkbox['"]/)
-    end
 
 
   end

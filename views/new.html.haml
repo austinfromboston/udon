@@ -2,18 +2,9 @@
   New
   = current_object.class.name.humanize
 
-%form{:method => 'POST', :action => objects_path}
-  - build_form( current_object ) do |f|
-    - f.fields.each do |field|
-      - if field.plural?
-        - field.segments.each do |field_segment|
-          %p
-            = field_segment.control
-            = field_segment.label
-      - else
-        %p
-          = field.label 
-          = field.control
+- build_form( current_object ) do |f|
+  - f.fields.each do |field|
+    %p
+      = control_for field
 
-    %p.submit
-      = f.submit "Create"
+  = submit "Create"

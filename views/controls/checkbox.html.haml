@@ -1,0 +1,3 @@
+%input{ :name => field.name, :type => 'hidden' }
+%input{ {:id => field.id, :name => field.name, :type => 'checkbox', :value => field.options[:label] }.merge( field.value ? { :checked => 'checked' } : {} )}
+= haml :'controls/label.html', {}, :field => field

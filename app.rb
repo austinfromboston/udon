@@ -62,31 +62,6 @@ module Udon
       sass :'sass/appliacation'
     end
 
-    helpers do
-      def build_form(source)
-        form_config = source.class.config
-        ( yield source.class.config.form_proxy source )
-      end
-
-      def objects_path
-        "/#{params[:collection]}"
-      end
-
-      def object_path( obj )
-        "/#{obj.class.name.underscore.pluralize}/#{obj.id}"
-      end
-
-      def edit_object_path( obj )
-        "/#{obj.class.name.underscore.pluralize}/#{obj.id}/edit"
-      end
-
-      def collection_class
-        @klass ||= Object.const_get params[:collection].classify
-      end
-
-      def collection_params
-        params.dup.delete_if { |key, item| key == :collection }
-      end
-    end
+    helpers FormHelper, RouteHelper, ResourceHelper
   end
 end
