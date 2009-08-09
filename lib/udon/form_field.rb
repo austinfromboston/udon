@@ -1,16 +1,16 @@
 module Udon
   class FormField
 
-    attr_accessor :name, :type, :options, :value, :select_options, :errors
-    def initialize(name, type, options={})
+    attr_accessor :name, :field_type, :options, :value, :select_options, :errors
+    def initialize(name, field_type, options={})
       self.name = name.to_s
-      self.type = type.to_sym
+      self.field_type = field_type.to_sym
       self.options = options
     end
 
     def value=(val)
       return @value = val unless plural?
-      self.send "#{self.type}_value=", val
+      self.send "#{self.field_type}_value=", val
     end
 
     def checkboxes_value=(vals)
@@ -24,7 +24,7 @@ module Udon
     end
 
     def plural?
-      type.to_s =~ /checkboxes/
+      field_type.to_s =~ /checkboxes/
     end
 
     def segments
@@ -52,7 +52,7 @@ module Udon
     end
 
     def id
-      "#{type}_#{name}"
+      "#{field_type}_#{name}"
     end
 
   end

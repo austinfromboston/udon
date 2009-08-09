@@ -30,10 +30,10 @@ module Udon
     def control_for(field)
       if field.plural?
         field.segments.inject("") do |rendered, field_segment|
-          rendered << haml( "controls/#{field_segment.type}.html".to_sym, {}, :field => field_segment )
+          rendered << haml( "controls/#{field_segment.field_type}.html".to_sym, {}, :field => field_segment )
         end
       else
-        haml "controls/#{field.type}.html".to_sym, {}, :field => field
+        haml "controls/#{field.field_type}.html".to_sym, {}, :field => field
       end
     end
 

@@ -48,11 +48,6 @@ module Udon
       fields.find { |f| f.name == key.to_s }
     end
 
-    def submit( text = nil )
-      text ||= "Submit"
-      FormField.haml( "%input{ :type => 'submit', :value => text }" ).render(nil, {:text => text })
-    end
-
     def form_proxy( source )
       populated = clone
       populated.fields = fields.map do |f|

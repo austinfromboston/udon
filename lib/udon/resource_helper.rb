@@ -5,7 +5,7 @@ module Udon
     end
 
     def collection_params
-      params.dup.delete_if { |key, item| key == :collection }
+      params.dup.delete_if { |key, item| key.to_sym == :collection }
     end
 
   end
