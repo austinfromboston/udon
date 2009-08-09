@@ -58,6 +58,7 @@ module Udon
       populated.fields = fields.map do |f|
         field_clone = f.clone
         field_clone.value = source.send f.name
+        field_clone.errors = !source.errors.on( f.name ).nil?
         field_clone
       end
       populated

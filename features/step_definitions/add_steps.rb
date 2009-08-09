@@ -34,6 +34,18 @@ When /^I submit the new example form$/ do
   post '/examples', :email => 'test@example.com'
 end
 
+When /^I submit the new example form with invalid data$/ do
+  post '/examples', :description => 'baloney'
+end
+
+Then /^I see a required field error message$/ do
+  last_response.body.should match(/can't be empty/)
+end
+
+Then /^the problem field is highlighted/ do
+  last_response.should have_selector(".error input[name*=email]")
+end
+
 When /^I request the examples index page$/ do
   get '/examples'
 end

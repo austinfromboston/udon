@@ -4,7 +4,8 @@ require 'rack/test'
 require 'webrat'
 require APP_ROOT + '/app'
 
-Udon::Application.set :environment, :development
+Udon::Application.set :environment, :test
+Udon::Application.set :show_exceptions, false
 World do
   def app
     @app = Rack::Builder.new do
@@ -17,5 +18,6 @@ World do
   Webrat.configure do |config|
     config.mode = :rack
   end
+
 
 end

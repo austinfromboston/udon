@@ -1,0 +1,14 @@
+- error_objects.each do |error_obj|
+  - next if error_obj.errors.empty?
+  .errors-block
+    %h2
+      Errors for 
+      = error_obj.class.name.titleize
+
+    %ul
+      - error_obj.errors.each do |(error_field_name, error_messages)|
+        - error_messages.each do |message|
+          %li
+            = "#{error_field_name.to_s.titleize} #{message}"
+          
+    

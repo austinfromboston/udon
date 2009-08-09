@@ -18,6 +18,12 @@ Feature: Adding example data
     When I submit the new example form
     Then I should see the examples list
 
+  Scenario: adding an invalid example
+    When I submit the new example form with invalid data
+    Then I see the new example form 
+	And I see a required field error message
+	And the problem field is highlighted
+
   Scenario: viewing examples list
     When I submit the new example form
     And I request the examples index page

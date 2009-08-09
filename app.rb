@@ -29,8 +29,11 @@ module Udon
     put '/:collection/:id' do
       current_object = collection_class.find( params[:id] )
       current_object.attributes = collection_params
-      current_object.save
-      redirect objects_path
+      if current_object.save
+        redirect objects_path
+      else
+        haml :'edit.html', {}, { :current_object => current_object }
+      end
     end
 
     #destroy
@@ -52,7 +55,7 @@ module Udon
       if @current_object.save
         redirect "/#{params[:collection]}", 303
       else
-        "FAIL!"
+        haml :'new.html', {}, { :current_object => @current_object }
       end
     end
 

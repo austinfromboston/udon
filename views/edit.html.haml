@@ -2,9 +2,11 @@
   Edit
   = collection_class.name
 
+= haml :'_errors.html', {}, :error_objects => [ current_object ]
+
 - build_form( current_object, :method => :put ) do |f|
   - f.fields.each do |field|
-    %p.form-field{ field.required? ? {:class => 'required'} : {} }
+    %p.form-field{ :class => field_class( field ) }
       = control_for field
 
   = submit "Update"

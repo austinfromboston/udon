@@ -1,7 +1,7 @@
 module Udon
   class FormField
 
-    attr_accessor :name, :type, :options, :value, :select_options
+    attr_accessor :name, :type, :options, :value, :select_options, :errors
     def initialize(name, type, options={})
       self.name = name.to_s
       self.type = type.to_sym
@@ -38,6 +38,11 @@ module Udon
     def required?
       options[:required]
     end
+
+    def errors?
+      options[:required]
+    end
+
 
     def html_options
       [ :name, :value, :id, :class ].inject({}) do |html_opts, option_name|

@@ -40,5 +40,12 @@ module Udon
     def submit text
       haml 'controls/submit.html'.to_sym, {}, :text => text
     end
+
+    def field_class field
+      class_names = []
+      class_names << "required" if field.required?
+      class_names << "error" if field.errors?
+      class_names.join " "
+    end
   end
 end

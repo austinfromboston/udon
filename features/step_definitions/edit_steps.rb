@@ -17,6 +17,10 @@ When /^I send updates to the example$/ do
   put "/examples/#{@ex.id}", :email => 'updated@example.com', :roles => { :parent => 'Parent', :student => 'Student' }
 end
 
+When /^I send invalid updates to the example$/ do
+  put "/examples/#{@ex.id}", :email => '', :roles => { :parent => 'Parent', :student => 'Student' }
+end
+
 Then /^I see the updated info in the list$/ do
   get "/examples"
   last_response.body.should match(/updated@example.com/)

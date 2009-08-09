@@ -13,6 +13,12 @@ Feature: Edit example data
     When I send updates to the example
     Then I see the updated info in the list
 
+  Scenario: update the example
+    When I send invalid updates to the example
+    Then I see a required field error message
+    And the problem field is highlighted
+
+
   Scenario: update checkboxes
     When I send updates to the example
     Then the database contains the checkbox values
