@@ -2,9 +2,7 @@ module Udon
   class AccountConfiguration
     @@schemas = {}
     delegate :database, :to => :mongo
-    def text
-    end
-
+    
     def mongo
       MongoMapper
     end
@@ -24,7 +22,16 @@ module Udon
       collection_class.instance_eval(&block)
       collection_class.config = Udon::CollectionConfiguration.new
       collection_class.config.assign(&block)
+      initialize_validations collection_class
       collection
+
+    end
+
+    def initialize_validations(collection_class)
+      collection_class.config.fields.each do |field|
+        next unless field.required?
+        collection_class.instance_eval "validates_presence_of :#{field.name}" rescue ArgumentError
+      end
 
     end
     

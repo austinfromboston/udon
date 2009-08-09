@@ -19,6 +19,10 @@ module Udon
       end
     end
 
+    def label
+      ( options[:label] || name.titleize ) unless options[:label] == false
+    end
+
     def plural?
       type.to_s =~ /checkboxes/
     end
