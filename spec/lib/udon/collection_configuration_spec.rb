@@ -12,7 +12,9 @@ describe Udon::CollectionConfiguration do
       @example.email = 'udon@example.org'
     end
     it "does not save values from undefined keys" do
-      @example.attributes = { :fake_attr => 'item' }
+      lambda{ 
+        @example.attributes = { :fake_attr => 'item' }
+      }.should raise_error( NoMethodError )
       lambda{ @example.fake_attr }.should raise_error( NoMethodError )
     end
   end

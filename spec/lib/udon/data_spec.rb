@@ -16,12 +16,13 @@ describe UdonExample do
 
   describe "checkboxes" do
     it "accepts arrays of data" do
-      UdonExample.checkboxes :topics, %w[ cheese tomato bread ]
       @example.topics = [ 'cheese', 'bread']
       @example.topics.should == ['cheese', 'bread']
     end
 
     it "accepts hashes and translates them as arrays" do
+      @example.is_a?(Udon::Data::CheckboxTopic).should be_true
+      puts @example.class.ancestors.inspect
       @example.topics = { :ch => 'cheese', :br => 'bread' }
       @example.topics.should include('cheese')
       @example.topics.should include('bread')

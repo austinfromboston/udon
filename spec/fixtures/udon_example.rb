@@ -12,6 +12,7 @@ Udon::Account.configure do |config|
     select :state, state_options
     text_area :description
     checkboxes :roles, %w( Parent Student Teacher Other )
+    checkboxes :topics, %w( cheese tomato bread )
     text :other_role
     #captcha
   end
