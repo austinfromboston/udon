@@ -10,6 +10,8 @@ Feature: Adding example data
 	And include_blank selects have an empty options
 	And classes from the configuration are in the html
 	And all fields have ids
+	And the file upload element is visible
+	And the form is multipart
 
 	And the email is marked as required
 	And the state select has options

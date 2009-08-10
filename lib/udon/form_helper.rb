@@ -14,7 +14,11 @@ module Udon
       options = args.extract_options!
       current_object = args.first
       path = current_object.new_record? ? objects_path : object_path(current_object)
-      "<form action='#{path}' method='POST'>\n#{method_override_field( current_object, options )}"
+      "<form action='#{path}' method='POST'#{form_encoding(current_object)}>\n#{method_override_field( current_object, options )}"
+    end
+
+    def form_encoding(current_object)
+      " encoding='multipart/form-data'" if current_object.config.fields.any? { |field| field.field_type == :file }
     end
 
     def method_override_field(current_object, options)

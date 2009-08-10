@@ -34,6 +34,10 @@ module Udon
         end
       end
 
+      def file(*args)
+        key args.first, File
+      end
+
     end
 
 

@@ -61,3 +61,11 @@ end
 Then /^I should see the examples list$/ do
   last_response.headers['Location'].should match( /examples$/ )
 end
+
+Then /the file upload element is visible/ do
+  last_response.should have_selector("input[type=file]")
+end
+
+Then /the form is multipart/ do
+  last_response.should have_selector("form[encoding='multipart/form-data']")
+end

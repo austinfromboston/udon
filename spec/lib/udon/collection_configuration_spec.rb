@@ -41,5 +41,11 @@ describe Udon::CollectionConfiguration do
       end
     end
 
+    describe "file fields" do
+      it "adds a field object" do
+        @form_config[:report].should be_a(Udon::FormField)
+      end
+    end
+
   end
 end

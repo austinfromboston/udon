@@ -40,6 +40,13 @@ module Udon
       self.fields << FormField.new( fieldname, :checkboxes, options.merge({ :values => args.first }) )
     end
 
+    def file(*args)
+      fieldname = args.shift
+      options = args.extract_options!
+      self.fields.delete_if { |f| f.name == fieldname }
+      self.fields << FormField.new( fieldname, :file, options.merge({ :values => args.first }) )
+    end
+
     def fields
       @fields ||= [] 
     end

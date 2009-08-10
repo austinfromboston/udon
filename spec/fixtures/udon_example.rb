@@ -13,7 +13,7 @@ Udon::Account.configure do |config|
     text_area :description, :class => 'minor'
     checkboxes :roles, %w( Parent Student Teacher Other )
     text :other_role
-    #file :report
+    file :report
     #captcha
   end
 
