@@ -9,11 +9,11 @@ Udon::Account.configure do |config|
     text :first_name
     text :last_name
     text :zip
-    select :state, state_options
-    text_area :description
+    select :state, %w( created pending complete ), :include_blank => true
+    text_area :description, :class => 'minor'
     checkboxes :roles, %w( Parent Student Teacher Other )
-    checkboxes :topics, %w( cheese tomato bread )
     text :other_role
+    #file :report
     #captcha
   end
 

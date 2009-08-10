@@ -1,4 +1,5 @@
 Given /an Example class is defined/ do
+=begin
   Udon::Account.configure do |config|
     config.database = 'greenschools'
     config.collection :examples do
@@ -8,6 +9,9 @@ Given /an Example class is defined/ do
       text_area :description, :class => 'minor'
     end
   end
+=end
+  require 'spec/fixtures/udon_example'
+  class Example < UdonExample; end
 end
 
 Given /an example has been created/ do

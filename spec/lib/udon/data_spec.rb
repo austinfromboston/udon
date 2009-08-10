@@ -16,22 +16,22 @@ describe UdonExample do
 
   describe "checkboxes" do
     it "accepts arrays of data" do
-      @example.topics = [ 'cheese', 'bread']
-      @example.topics.should == ['cheese', 'bread']
+      @example.roles = [ 'cheese', 'bread']
+      @example.roles.should == ['cheese', 'bread']
     end
 
     it "accepts hashes and translates them as arrays" do
-      @example.topics = { :ch => 'cheese', :br => 'bread' }
-      @example.topics.should include('cheese')
-      @example.topics.should include('bread')
-      @example.topics.size.should == 2
+      @example.roles = { :ch => 'cheese', :br => 'bread' }
+      @example.roles.should include('cheese')
+      @example.roles.should include('bread')
+      @example.roles.size.should == 2
     end
 
     it "handles mass assignment as well" do
-      @example.attributes = { :topics => { :ch => 'cheese', :br => 'bread' } }
-      @example.topics.should include('cheese')
-      @example.topics.should include('bread')
-      @example.topics.size.should == 2
+      @example.attributes = { :roles => { :ch => 'cheese', :br => 'bread' } }
+      @example.roles.should include('cheese')
+      @example.roles.should include('bread')
+      @example.roles.size.should == 2
     end
   end
 

@@ -29,7 +29,7 @@ module Udon
         else
           checkbox_mod = Module.new
           Udon::Data.const_set( module_name, checkbox_mod )
-          checkbox_mod.module_eval( CHECKBOX_MODULE_CODE % field_name )
+          checkbox_mod.module_eval( CHECKBOX_MODULE_CODE % field_name, __FILE__, __LINE__ )
           include checkbox_mod
         end
       end
