@@ -51,7 +51,7 @@ module Udon
     #create
     post '/:collection' do
       @current_object = collection_class.new
-      @current_object.update_attributes collection_params
+      @current_object.attributes = collection_params
       if @current_object.save
         redirect "/#{params[:collection]}", 303
       else

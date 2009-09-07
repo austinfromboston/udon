@@ -43,7 +43,8 @@ module Udon
       "#{name}-#{Sinatra::Application.environment}"
     end
     def db_collection_name( name )
-      "#{mongo.database.name}.#{name}"
+      "#{name}"
+      #"#{mongo.database.name}.#{name}"
     end
 
   end

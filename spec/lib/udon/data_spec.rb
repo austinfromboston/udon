@@ -33,6 +33,14 @@ describe UdonExample do
       @example.roles.should include('bread')
       @example.roles.size.should == 2
     end
+
+    it "saves stuff to the db" do
+      @example.attributes = { :roles => { :ch => 'cheese', :br => 'bread' }, :email => 'ok@example.com' }
+      @example.save
+      ex = UdonExample.find @example.id
+      ex.roles.size.should == 2
+    end
+
   end
 
   describe "arguments array" do
@@ -47,6 +55,27 @@ describe UdonExample do
       @args.extract_options!
       @args.size.should == 3
     end
+  end
+
+  describe "file fields" do
+    before do
+      @example.email = "valid@example.com"
+      @tmp = Tempfile.new 'test.txt'
+      @tmp.write "test data"
+    end
+
+    it "accepts a tmp file" do
+      @example.report = { :tempfile => @tmp, :filename => 'test.txt', :type => 'text/plain' }
+      @example.report.read.should == "test data"
+    end
+
+    it "saves and restores a tmp file" do
+      @example.report = { :tempfile => @tmp, :filename => 'test.txt', :type => 'text/plain' }
+      @example.save!
+      ex = UdonExample.find @example.id
+      ex.report.read.should == "test data"
+    end
+
   end
 
 

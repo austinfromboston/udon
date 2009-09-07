@@ -5,7 +5,8 @@ module Udon
     end
 
     def collection_params
-      params.dup.delete_if { |key, item| key.to_sym == :collection }
+      unsafe_keys = [ :collection, :'_method' ]
+      params.dup.delete_if { |key, item| unsafe_keys.include? key.to_sym }
     end
 
   end

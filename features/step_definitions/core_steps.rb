@@ -18,6 +18,14 @@ Given /an example has been created/ do
   @ex = Example.create :email => 'edit@example.com', :state => 'complete'
 end
 
+Given /the database is cleared of examples/ do
+  Example.all.each { |ex| ex.destroy }
+end
+
+When /the database has no examples/ do
+  Example.all.each { |ex| ex.destroy }
+end
+
 
 
 

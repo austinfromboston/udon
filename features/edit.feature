@@ -1,6 +1,7 @@
 Feature: Edit example data
   Background: 
     Given an Example class is defined
+    And the database is cleared of examples
     And an example has been created
 
   Scenario: view the example form
@@ -10,8 +11,14 @@ Feature: Edit example data
     And the edit form fakes a PUT with a hidden field
 
   Scenario: update the example
-    When I send updates to the example
+    When the database is cleared of examples
+    And an example has been created
+    And I send updates to the example
     Then I see the updated info in the list
+
+  Scenario: empty db
+    When the database has no examples
+    Then there should be nothing in the list
 
   Scenario: update the example
     When I send invalid updates to the example

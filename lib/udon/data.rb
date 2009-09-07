@@ -2,6 +2,7 @@ module Udon
   module Data
     def self.included(klass)
       klass.send :include, MongoMapper::Document
+      klass.send :include, MongoMapperOverrides
       klass.send :extend, ClassMethods
       klass.send :cattr_accessor, :config
     end
@@ -35,26 +36,28 @@ module Udon
       end
 
       def file(*args)
-        key args.first, File
+        key args.first
       end
 
     end
 
 
     unless const_defined? 'CHECKBOX_MODULE_CODE'
-      CHECKBOX_MODULE_CODE = <<-CHECK
+      CHECKBOX_MODULE_CODE = <<-end_eval
         def %1$s=(value)
           super( value.respond_to?( :values ) ? value.values : value )
         end
+      end_eval
+    end
 
-        def attributes=(values)
-          values.stringify_keys!
-          if values.has_key?('%1$s') && values['%1$s'].respond_to?( :values )
-            values['%1$s'] = values['%1$s'].values
-          end
-          super values
-        end
-      CHECK
+
+
+    module MongoMapperOverrides
+      def ensure_key_exists(name)
+        raise NoMethodError unless respond_to? "#{name}"
+        super
+      end
+
     end
   end
 end

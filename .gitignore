@@ -1,4 +1,5 @@
 config/*.yml
+.dbshell
 log
 tmp
 .DS_Store

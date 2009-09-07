@@ -6,7 +6,6 @@ Then /^I see existing data in the form$/ do
   get "/examples/#{@ex.id}/edit"
   last_response.should have_selector("input[value=\"#{@ex.email}\"]")
   last_response.should have_selector("option[value=\"#{@ex.state}\"][selected]")
-  #last_response.should have_selector("input[value=\"Parent\"]:not(:checked)")
 end
 
 Then /^the edit form points to the example url$/ do
@@ -35,4 +34,8 @@ Then /^the database contains the checkbox values$/ do
   fresh_ex.roles.size.should == 2
   fresh_ex.roles.should include("Parent")
   fresh_ex.roles.should include("Student")
+end
+
+Then /^there should be nothing in the list$/ do
+  Example.count.should == 0
 end

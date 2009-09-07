@@ -18,7 +18,7 @@ module Udon
     end
 
     def form_encoding(current_object)
-      " encoding='multipart/form-data'" if current_object.config.fields.any? { |field| field.field_type == :file }
+      " enctype='multipart/form-data'" if current_object.config.fields.any? { |field| field.field_type == :file }
     end
 
     def method_override_field(current_object, options)

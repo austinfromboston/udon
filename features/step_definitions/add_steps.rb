@@ -67,5 +67,5 @@ Then /the file upload element is visible/ do
 end
 
 Then /the form is multipart/ do
-  last_response.should have_selector("form[encoding='multipart/form-data']")
+  last_response.should have_selector("form[enctype='multipart/form-data']")
 end
