@@ -8,6 +8,7 @@ end
 
 load 'udon/data.rb'
 load 'udon/account.rb'
+load 'udon/uploaders/file_uploader.rb'
 load 'udon/account_configuration.rb'
 load 'udon/collection_configuration.rb'
 load 'udon/form_helper.rb'

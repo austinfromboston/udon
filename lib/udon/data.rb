@@ -36,7 +36,7 @@ module Udon
       end
 
       def file(*args)
-        key args.first
+        mount_uploader args.first, Udon::FileUploader
       end
 
     end
