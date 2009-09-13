@@ -6,7 +6,7 @@
 
 - build_form( current_object, :method => :put ) do |f|
   - f.fields.each do |field|
-    %p.form-field{ :class => field_class( field ) }
+    .form-field{ :class => field_class( field ) }
       = control_for field
 
   = submit "Update"

@@ -3,5 +3,11 @@
   %title Udon Demo
   = stylesheet_link_tag '/stylesheets/grid.css'
   = stylesheet_link_tag '/stylesheets/text.css'
+  = stylesheet_link_tag '/stylesheets/default.css'
 %body
-  = yield
+  .two-column
+    #header
+    #main-content
+      = yield
+    #sidebar
+    #footer
