@@ -17,12 +17,12 @@ module Udon
 
     #new
     get '/:collection/new' do
-      haml :'new.html', {}, { :current_object => collection_class.new }
+      haml :'new.html', {:layout => :'layouts/application.html'}, { :current_object => collection_class.new }
     end
 
     #index
     get '/:collection' do
-      haml :'index.html', {}, { :current_objects => collection_class.all, :collection_class => collection_class }
+      haml :'index.html', {:layout => :'layouts/application.html'}, { :current_objects => collection_class.all, :collection_class => collection_class }
     end
 
     #update
@@ -32,7 +32,7 @@ module Udon
       if current_object.save
         redirect objects_path
       else
-        haml :'edit.html', {}, { :current_object => current_object }
+        haml :'edit.html', {:layout => :'layouts/application.html'}, { :current_object => current_object }
       end
     end
 
@@ -45,7 +45,7 @@ module Udon
 
     #edit
     get '/:collection/:id/edit' do
-      haml :'edit.html', {}, { :current_object => collection_class.find( params[:id] )}
+      haml :'edit.html', {:layout => :'layouts/application.html'}, { :current_object => collection_class.find( params[:id] )}
     end
 
     #create
@@ -55,16 +55,17 @@ module Udon
       if @current_object.save
         redirect "/#{params[:collection]}", 303
       else
-        haml :'new.html', {}, { :current_object => @current_object }
+        haml :'new.html', {:layout => :'layouts/application.html'}, { :current_object => @current_object }
       end
     end
 
     #sass
     get '/stylesheets/application.css' do
       header 'Content-Type' => 'text/css; charset=utf-8'
-      sass :'sass/appliacation'
+      sass :'sass/application'
     end
 
     helpers FormHelper, RouteHelper, ResourceHelper
+    helpers Sinatra::UrlForHelper, Sinatra::StaticAssets
   end
 end

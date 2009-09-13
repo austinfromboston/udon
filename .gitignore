@@ -16,3 +16,4 @@ config/initializers/hoptoad.rb
 public/uploads
 spec/public/uploads
 .#*
+app/stylesheets/.sass-cache

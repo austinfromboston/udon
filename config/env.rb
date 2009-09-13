@@ -14,6 +14,7 @@ load 'udon/collection_configuration.rb'
 load 'udon/form_helper.rb'
 load 'udon/route_helper.rb'
 load 'udon/resource_helper.rb'
+require 'sinatra/static_assets'
 
 class Sinatra::Reloader < Rack::Reloader 
   def safe_load(file, mtime, stderr = $stderr) 
