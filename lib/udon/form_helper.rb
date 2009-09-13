@@ -33,7 +33,9 @@ module Udon
 
     def control_for(field)
       if field.plural?
-        field.segments.inject("") do |rendered, field_segment|
+
+        rendered = haml( "controls/group_header.html".to_sym, {}, :field => field )
+        field.segments.inject(rendered) do |rendered, field_segment|
           rendered << haml( "controls/#{field_segment.field_type}.html".to_sym, {}, :field => field_segment )
         end
       else
@@ -49,6 +51,8 @@ module Udon
       class_names = []
       class_names << "required" if field.required?
       class_names << "error" if field.errors?
+      class_names << "checkbox" if [ :checkboxes, :checkbox ].include?(field.field_type)
+
       class_names.join " "
     end
   end
