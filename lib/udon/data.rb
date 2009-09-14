@@ -4,7 +4,7 @@ module Udon
       klass.send :include, MongoMapper::Document
       klass.send :include, MongoMapperOverrides
       klass.send :extend, ClassMethods
-      klass.send :cattr_accessor, :config, :services
+      klass.send :cattr_accessor, :config
     end
 
 
@@ -45,10 +45,14 @@ module Udon
         options = args.extract_options!
         service_name = args.first
         service = Udon::Services.const_get("#{service_name}".classify)
-        self.services ||= {}
-        self.services[:democracy_in_action] ||= []
-        self.services[:democracy_in_action] << service.new( self, options )
+        self.services[service_name.to_sym] ||= []
+        self.services[service_name.to_sym] << service.new( self, options )
       end
+
+      def services
+        @@services ||= {}
+      end
+
     
       
       

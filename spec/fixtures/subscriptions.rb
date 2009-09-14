@@ -22,7 +22,7 @@ Udon::Account.configure do |config|
   config.service :democracy_in_action do |dia|
     dia.login    = "demo"
     dia.password = "demo"
-    dia.node     = "sandbox.salsalabs.com"
+    dia.node     = :sandbox
   end
 
   #config.publish :subscriptions, :to => :democracy_in_action, :as => 'supporter'

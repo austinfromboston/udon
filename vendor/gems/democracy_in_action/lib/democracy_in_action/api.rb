@@ -469,7 +469,7 @@ module DemocracyInAction
     end
 
     def client
-      @client || authenticate
+      @client || ( authenticate && @client )
     end
 
     # Checks for a method being one of the supported objects and
