@@ -17,6 +17,52 @@ describe Udon::CollectionConfiguration do
       }.should raise_error( NoMethodError )
       lambda{ @example.fake_attr }.should raise_error( NoMethodError )
     end
+
+    it "does not save objects missing required fields" do
+      ex = UdonExample.new :roles => [ "Parent" ]
+      ex.should_not be_valid
+    end
+
+    it "does save objects with required values present" do
+      ex = UdonExample.new :roles => [ "Parent" ], :email => 'test@example.com'
+      ex.should be_valid
+    end
+
+    describe "dia introspection" do
+      before do
+        UdonExample.notify :democracy_in_action, :as => "supporter"
+        @ex = UdonExample.new :roles => [ 'Parent' ], :email => 'test@example.com', :first_name => 'Eggmont'
+      end
+      it "polls dia keys" do
+        @ex.democracy_in_action.supporter.keys.should include("supporter_KEY")
+      end
+
+      it "converts keys to dia forms" do
+        @ex.class.services[:democracy_in_action].first.dia_data(@ex).keys.should include("Email")
+      end
+
+    end
+
+    describe "pubsub" do
+      before do
+        @keys = DemocracyInAction::API.new( {} ).supporter.keys
+        UdonExample.notify :democracy_in_action, :as => "supporter"
+        @ex = UdonExample.new :roles => [ 'Parent' ], :email => 'test@example.com', :first_name => 'Eggmont'
+        @supporter_proxy = stub(:supporter_proxy, :keys => @keys)
+        @dia = stub(:dia_api, :supporter => @supporter_proxy )
+        Udon::Account.configuration.services.should_receive(:[]).with(:democracy_in_action).any_number_of_times.and_return(@dia)
+        
+      end
+
+      it "sends data to the dia service" do
+        #@dia.should_receive(:supporter).any_number_of_times.and_return(@supporter_proxy)
+        @supporter_proxy.should_receive(:save).any_number_of_times.with( hash_including( { 'Email' => 'test@example.com', 'First_Name' => 'Eggmont' } ))
+        @ex.save
+
+      end
+
+    end
+
   end
 
   describe "form proxy" do

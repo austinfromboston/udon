@@ -21,4 +21,9 @@ Udon::Account.configure do |config|
 
   end
 
+  config.service :democracy_in_action do |dia|
+    dia.login = "demo"
+    dia.password = "demo"
+    dia.node     = :sandbox
+  end
 end

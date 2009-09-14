@@ -55,6 +55,8 @@ module Udon
       fields.find { |f| f.name == key.to_s }
     end
 
+    def notify(*args); end
+
     def form_proxy( source )
       populated = clone
       populated.fields = fields.map do |f|

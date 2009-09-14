@@ -4,8 +4,9 @@ module Udon
       klass.send :include, MongoMapper::Document
       klass.send :include, MongoMapperOverrides
       klass.send :extend, ClassMethods
-      klass.send :cattr_accessor, :config
+      klass.send :cattr_accessor, :config, :services
     end
+
 
     module ClassMethods
       def text(*args)
@@ -38,6 +39,19 @@ module Udon
       def file(*args)
         mount_uploader args.first, Udon::FileUploader
       end
+
+
+      def notify( *args )
+        options = args.extract_options!
+        service_name = args.first
+        service = Udon::Services.const_get("#{service_name}".classify)
+        self.services ||= {}
+        self.services[:democracy_in_action] ||= []
+        self.services[:democracy_in_action] << service.new( self, options )
+      end
+    
+      
+      
 
     end
 

@@ -15,5 +15,17 @@ Udon::Account.configure do |config|
     text_area :description, :class => :minor
     file :report
     #captcha
+    
+    notify :democracy_in_action, :as => 'supporter'
   end
+
+  config.service :democracy_in_action do |dia|
+    dia.login    = "demo"
+    dia.password = "demo"
+    dia.node     = "sandbox.salsalabs.com"
+  end
+
+  #config.publish :subscriptions, :to => :democracy_in_action, :as => 'supporter'
+  #publish :subscriptions, :to => :email, :recipient => "austin+udon@example.com"
+  
 end

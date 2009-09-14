@@ -2,6 +2,7 @@ module Udon
   class AccountConfiguration
     @@schemas = {}
     delegate :database, :to => :mongo
+    attr_accessor :services
     
     def mongo
       MongoMapper
@@ -42,9 +43,26 @@ module Udon
     def db_database_name( name )
       "#{name}-#{Sinatra::Application.environment}"
     end
+
     def db_collection_name( name )
       "#{name}"
       #"#{mongo.database.name}.#{name}"
+    end
+
+    def service( service_name, &blk )
+      self.services ||= {}
+      if self.services[service_name].nil? || blk
+        service_instance = self.send "load_service_#{service_name}", &blk
+      end
+      self.services[service_name] ||= service_instance
+    end
+
+    def load_service_democracy_in_action &blk
+      if block_given?
+        config = OpenStruct.new
+        yield config
+      end
+      DemocracyInAction::API.new( {}, config.login, config.password, config.node )
     end
 
   end

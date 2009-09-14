@@ -3,17 +3,25 @@ require 'spec/fixtures/udon_example'
 
 describe Udon::AccountConfiguration do
   before do
-    @config = UdonExample.config
+    @config = Udon::AccountConfiguration.new
   end
 
-  it "does not save objects missing required fields" do
-    ex = UdonExample.new :roles => [ "Parent" ]
-    ex.should_not be_valid
-  end
+  describe "service objects" do
+    before do
+      @service = @config.service( :democracy_in_action ) do |dia|
+        dia.login = "demo"
+        dia.password= "demo"
+        dia.node = :salsa
+      end
+    end
+    it "initializes a service object" do
+      @service.should be_an_instance_of DemocracyInAction::API
+    end
 
-  it "does save objects with required values present" do
-    ex = UdonExample.new :roles => [ "Parent" ], :email => 'test@example.com'
-    ex.should be_valid
+    it "retains the login info" do
+      @service.username.should == "demo"
+    end
+
   end
 
 end

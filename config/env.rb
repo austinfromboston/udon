@@ -8,6 +8,7 @@ end
 
 load 'udon/data.rb'
 load 'udon/account.rb'
+load 'udon/services/democracy_in_action.rb'
 load 'udon/uploaders/file_uploader.rb'
 load 'udon/account_configuration.rb'
 load 'udon/collection_configuration.rb'
@@ -15,6 +16,7 @@ load 'udon/form_helper.rb'
 load 'udon/route_helper.rb'
 load 'udon/resource_helper.rb'
 require 'sinatra/static_assets'
+require 'vendor/gems/democracy_in_action/lib/democracy_in_action'
 
 class Sinatra::Reloader < Rack::Reloader 
   def safe_load(file, mtime, stderr = $stderr) 
