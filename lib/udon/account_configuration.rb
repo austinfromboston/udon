@@ -1,3 +1,4 @@
+require 'ostruct'
 module Udon
   class AccountConfiguration
     @@schemas = {}
@@ -62,7 +63,8 @@ module Udon
         config = OpenStruct.new
         yield config
       end
-      DemocracyInAction::API.new( {}, config.login, config.password, config.node )
+      # passing an argument to node below prevents a very odd error in cucumber
+      DemocracyInAction::API.new( {}, config.login, config.password, config.node(true) )
     end
 
   end

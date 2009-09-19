@@ -1,7 +1,8 @@
 = haml :'controls/label.html', {}, :field => field
 %input{ { :id => field.id, :name => field.name, :type => 'file' }.merge(field.html_options) }
 %input{ { :name => "#{field.name}_cache", :type => 'hidden' } }
-%p
-  %a{:href => field.value.url } 
-    Download
-    = File.basename( field.value.current_path )
+- if field.value.current_path
+  %p
+    %a{:href => field.value.url } 
+      Download
+      = File.basename( field.value.current_path )
