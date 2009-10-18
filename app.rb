@@ -1,5 +1,6 @@
 require 'config/env'
 require 'spec/fixtures/subscriptions'
+require 'spec/fixtures/petitions'
 
 module Udon
   class Application < Sinatra::Base

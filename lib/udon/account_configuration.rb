@@ -51,11 +51,14 @@ module Udon
     end
 
     def service( service_name, &blk )
-      self.services ||= {}
       if self.services[service_name].nil? || blk
         service_instance = self.send "load_service_#{service_name}", &blk
       end
       self.services[service_name] ||= service_instance
+    end
+
+    def services
+      @services ||= {}
     end
 
     def load_service_democracy_in_action &blk

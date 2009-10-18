@@ -15,10 +15,16 @@ Udon::Account.configure do |config|
     text :other_role
     file :report
     #captcha
+    
+    use_name :email
+    many :propositions
   end
 
   config.collection :propositions do
+    text :title
+    wysiwyg :body
 
+    belongs_to :udon_example
   end
 
   config.service :democracy_in_action do |dia|

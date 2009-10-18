@@ -1,3 +1,4 @@
+=begin
 module Udon
   class FormRenderer
     def render_text
@@ -32,3 +33,4 @@ module Udon
 
   end
 end
+=end

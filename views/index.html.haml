@@ -5,6 +5,6 @@
 %ul
   - current_objects.each do |obj|
     %li
-      = obj.email
+      = obj.name
       = obj.id
       %a{ :href => edit_object_path( obj )} edit 

@@ -9,6 +9,10 @@ module Udon
         @host, @target = base, options[:as]
       end
 
+      def active?
+        Udon::Account.configuration.services[:democracy_in_action].present?
+      end
+
       def save( source )
         dia_proxy.save dia_data( source )
       end
@@ -17,7 +21,19 @@ module Udon
         Udon::Account.configuration.services[:democracy_in_action].send @target
       end
 
+      def dia_keys
+        @dia_keys ||= @host.keys.inject({}) do |matched_keys, (key_name, key)|
+          dia_style_key_name = key_name.gsub /^[a-z]|_([a-z])/ do |match|
+            match.upcase
+          end
+          matched_keys[key_name] = dia_style_key_name if dia_proxy.keys.include?(dia_style_key_name) 
+          matched_keys
+        end
+
+      end
+
       def dia_data(source)
+=begin
         @host_keys ||= @host.keys.map do |key_name, key|
           dia_style_key_name = key_name.gsub /^[a-z]|_([a-z])/ do |match|
             match.upcase
@@ -27,6 +43,11 @@ module Udon
 
         @host_keys.inject({}) do |dia_data, (host_key, dia_key)|
           dia_data[dia_key] = source.send host_key if dia_proxy.keys.include?(dia_key)
+          dia_data
+        end
+=end
+        dia_keys.inject({}) do |dia_data, (host_key, dia_key)| 
+          dia_data[dia_key] = source.send host_key 
           dia_data
         end
       end
@@ -41,6 +62,7 @@ module Udon
         end
 
         def update_democracy_in_action
+          return unless self.class.services[:democracy_in_action]
           self.class.services[:democracy_in_action].each do |svc|
             svc.save(self)
           end

@@ -68,6 +68,37 @@ module Udon
       populated
     end
 
+    def many( *args )
+      association_name = args.first
+      options = args.extract_options!
+      id_name = "#{association_name.to_s.singularize}_ids"
+      checkboxes id_name, lambda { 
+          Object.const_get("#{association_name}".classify).all.map { | item | 
+            [ item.id, item.name ]
+          }
+        }, options
+    end
+
+    def belongs_to( *args )
+      association_name = args.first
+      options = args.extract_options!
+      id_name = "#{association_name}_id"
+      select id_name, lambda { 
+          Object.const_get("#{association_name}".classify).all.map { | item | 
+            [ item.id, item.name ]
+          }
+        }, options
+    end
+
+    def use_name(*args)
+    end
+
+    def wysiwyg(*args)
+      options = args.extract_options!
+      args << options.merge({:wysiwyg => true})
+      text_area *args
+    end
+
   end
 
 end

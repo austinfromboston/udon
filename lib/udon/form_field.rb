@@ -15,7 +15,7 @@ module Udon
 
     def checkboxes_value=(vals)
       segments.each do |seg|
-        seg.value = vals.include? seg.options[:label]
+        seg.value = vals && vals.include?( seg.options[:label] ) 
       end
     end
 
@@ -29,8 +29,10 @@ module Udon
 
     def segments
       return [self] unless plural?
-      @segments ||= options[:values].map do |opt|
-        FormField.new "#{name}[#{opt.underscore}]", :checkbox, :label => opt
+      return @segments if @segments
+      values = options[:values].is_a?(Proc) ? options[:values].call : options[:values]
+      @segments ||= values.map do |opt, opt_label|
+        FormField.new "#{name}[#{opt.underscore}]", :checkbox, :label => ( opt_label || opt )
       end
 
     end
@@ -43,6 +45,10 @@ module Udon
       options[:required]
     end
 
+    def select_options
+      return @select_options unless @select_options.is_a? Proc
+      @select_options.call
+    end
 
     def html_options
       [ :name, :value, :id, :class ].inject({}) do |html_opts, option_name|

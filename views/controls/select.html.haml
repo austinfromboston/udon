@@ -1,13 +1,16 @@
 = haml :'controls/label.html', {}, :field => field
 %select{ { :name => field.name, :id => field.id }.merge(field.html_options) }
   - if field.options[:include_blank]
-    %option{ :value => '' }
-      - if field.options[:include_blank] != true
-        = field.options[:include_blank]
+    %option{ :value => '' }= field.options[:include_blank] if field.options[:include_blank] != true
 
-  - field.select_options.each do |option_value|
+  - field.select_options.each do |select_option|
+    - if select_option.respond_to? :first
+      - option_value, option_name = *select_option
+    - else
+      - option_value = option_name = select_option
+
     - if field.value == option_value
-      %option{ :value => option_value, :selected => 'selected' }= option_value
+      %option{ :value => option_value, :selected => 'selected' }= option_name
     - else 
-      %option{ :value => option_value }= option_value
+      %option{ :value => option_value }= option_name
 

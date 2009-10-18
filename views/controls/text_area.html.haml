@@ -1,2 +1,9 @@
 = haml :'controls/label.html', {}, :field => field
 %textarea{ { :id => field.id, :name => field.name }.merge( field.html_options ) }~ field.value
+- if field.options[:wysiwyg]
+  %script{ :type => 'text/javascript' }
+    :plain
+    
+      $(document).ready( function() {
+        $('##{field.id}').wysiwyg();
+      } );
