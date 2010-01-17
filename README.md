@@ -32,7 +32,5 @@ An example of an Udon configuration file:
 		dia.node = :sandbox
 	  end
 
-	  config.publish :subscriptions, :to => :democracy_in_action, :as => 'supporter'
-	  publish :subscriptions, :to => :email, :recipient => "austin+udon@example.com"
 	  
 	end
